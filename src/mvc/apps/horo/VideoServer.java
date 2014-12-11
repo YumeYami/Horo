@@ -172,8 +172,8 @@ public class VideoServer extends Activity implements SurfaceHolder.Callback{
     }
     
     private void upload(byte[] data){
-    	String domain = "http://192.168.16.2";
-    	String url = domain + "/horo.php";
+    	String domain = "http://192.168.137.1";
+    	String url = domain + "/handserver/public/predict";
     	AsyncHttpClient client = new AsyncHttpClient();
     	RequestParams params = new RequestParams();
     	params.put("uploaded_file", new ByteArrayInputStream(data), "img.jpg");
@@ -194,7 +194,7 @@ public class VideoServer extends Activity implements SurfaceHolder.Callback{
     	    	Intent intent = new Intent(getApplication(), BrowserActivity.class);
     	    	String message = new String(response);
     	    	Log.i("RESPONSE", message);
-    	    	intent.putExtra("DOMAIN", "http://192.168.16.2");
+    	    	intent.putExtra("DOMAIN", "http://192.168.137.1");
     	        intent.putExtra("FILENAME", message);
     	        startActivity(intent);
     	        Log.i("UPLOAD", "Start New Activity");
