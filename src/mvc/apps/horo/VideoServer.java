@@ -1,6 +1,7 @@
 package mvc.apps.horo;
 
 import java.io.ByteArrayInputStream;
+import java.util.List;
 
 import org.apache.http.Header;
 
@@ -117,13 +118,34 @@ public class VideoServer extends Activity implements SurfaceHolder.Callback{
 	        Camera.Parameters param;
 	        camera.setDisplayOrientation(90);
 	        param = camera.getParameters();
-            param.setPreviewFrameRate(20);
-	        param.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
-	        param.setWhiteBalance(Camera.Parameters.WHITE_BALANCE_AUTO);
-	        param.setSceneMode(Camera.Parameters.SCENE_MODE_AUTO);
-	        param.setPreviewSize(435, 320);
-            param.setPreviewFormat(ImageFormat.NV16);
-	        camera.setParameters(param);
+            try {
+                param.setPreviewFrameRate(20);
+                param.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
+                param.setWhiteBalance(Camera.Parameters.WHITE_BALANCE_AUTO);
+                param.setSceneMode(Camera.Parameters.SCENE_MODE_AUTO);
+                int cwidth = 320;
+                int cheight = 435;
+                List<Camera.Size> sizes = param.getSupportedPreviewSizes();
+                double minDiff = Double.MAX_VALUE;
+                for (Camera.Size size: sizes){
+                    if(Math.abs(size.width - cwidth) < minDiff){
+                        cwidth = size.width;
+                        cheight = size.height;
+                        minDiff = Math.abs(size.width - cwidth);
+                    }
+                }
+                param.setPreviewSize(cwidth,cheight);
+                param.setPreviewFormat(ImageFormat.JPEG);
+            }
+            catch (Exception e){
+                Log.e(tag,"error set something: "+e);
+            }
+            try {
+                camera.setParameters(param);
+            }
+            catch (Exception e){
+                Log.e(tag,"error setparam: "+e);
+            }
             try {
                 camera.setPreviewDisplay(surfaceHolder);
 	            camera.startPreview();
