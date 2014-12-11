@@ -103,7 +103,7 @@ public class VideoServer extends Activity implements SurfaceHolder.Callback{
 
     private void captureImage() {
         start.setVisibility(View.VISIBLE);
-        start.setVisibility(View.INVISIBLE);
+        capture.setVisibility(View.INVISIBLE);
     	if(cameraWorking){
     		camera.takePicture(shutterCallback, rawCallback, jpegCallback);
     	}
@@ -140,6 +140,7 @@ public class VideoServer extends Activity implements SurfaceHolder.Callback{
                         minDiff = Math.abs(size.width - cwidth);
                     }
                 }
+                param.setPictureSize(866,650);
                 param.setPreviewSize(cwidth,cheight);
                 param.setPreviewFormat(ImageFormat.JPEG);
             }

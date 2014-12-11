@@ -61,3 +61,4 @@ local.properties
 # TeXlipse plugin
 .texlipse
 bin
+.idea/workspace.xml

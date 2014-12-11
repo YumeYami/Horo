@@ -19,7 +19,7 @@ public class BrowserActivity extends Activity {
         Intent intent = getIntent();
 		domain = intent.getStringExtra("DOMAIN");
 		filename = intent.getStringExtra("FILENAME");
-        Log.e("BROWSER", "output: "+ domain + "/horo-out/" + filename + ".html");
-        mWeb.loadUrl(domain + "/horo-out/" + filename + ".html" );
+        Log.e("BROWSER", "output: "+ domain + "/handserver/public/result/" + filename);
+        mWeb.loadUrl(domain + "/handserver/public/result/" + filename );
 	}
 }
