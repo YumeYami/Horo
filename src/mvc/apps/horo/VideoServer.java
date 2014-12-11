@@ -12,6 +12,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
+import android.graphics.ImageFormat;
 import android.hardware.Camera;
 import android.hardware.Camera.PictureCallback;
 import android.hardware.Camera.ShutterCallback;
@@ -116,14 +117,15 @@ public class VideoServer extends Activity implements SurfaceHolder.Callback{
 	        Camera.Parameters param;
 	        camera.setDisplayOrientation(90);
 	        param = camera.getParameters();
-	        param.setPreviewFrameRate(20);
+            param.setPreviewFrameRate(20);
 	        param.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
 	        param.setWhiteBalance(Camera.Parameters.WHITE_BALANCE_AUTO);
 	        param.setSceneMode(Camera.Parameters.SCENE_MODE_AUTO);
-	        param.setPictureSize(866, 650);
+	        param.setPreviewSize(435, 320);
+            param.setPreviewFormat(ImageFormat.NV16);
 	        camera.setParameters(param);
-	        try {
-	            camera.setPreviewDisplay(surfaceHolder);
+            try {
+                camera.setPreviewDisplay(surfaceHolder);
 	            camera.startPreview();
 	            cameraWorking = true;
 	        } catch (Exception e) {
