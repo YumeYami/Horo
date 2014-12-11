@@ -1,18 +1,8 @@
 package mvc.apps.horo;
 
-import java.io.ByteArrayInputStream;
-import java.util.List;
-
-import org.apache.http.Header;
-
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-
 import android.graphics.ImageFormat;
 import android.hardware.Camera;
 import android.hardware.Camera.PictureCallback;
@@ -26,6 +16,15 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
+import org.apache.http.Header;
+
+import java.io.ByteArrayInputStream;
+import java.util.List;
+
 @SuppressWarnings("deprecation")
 public class VideoServer extends Activity implements SurfaceHolder.Callback{
     TextView testView;
@@ -38,6 +37,7 @@ public class VideoServer extends Activity implements SurfaceHolder.Callback{
     PictureCallback jpegCallback;
     private final String tag = "VideoServer";
     private boolean cameraWorking = false;
+    private boolean startCamera = false;
 
     Button start, stop, capture;
 
@@ -63,6 +63,8 @@ public class VideoServer extends Activity implements SurfaceHolder.Callback{
             }
         });
         */
+        start.setVisibility(View.VISIBLE);
+        capture.setVisibility(View.INVISIBLE);
         capture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,12 +102,16 @@ public class VideoServer extends Activity implements SurfaceHolder.Callback{
     }
 
     private void captureImage() {
+        start.setVisibility(View.VISIBLE);
+        start.setVisibility(View.INVISIBLE);
     	if(cameraWorking){
     		camera.takePicture(shutterCallback, rawCallback, jpegCallback);
     	}
     }
 
     private void start_camera(){
+        start.setVisibility(View.INVISIBLE);
+        capture.setVisibility(View.VISIBLE);
     	if(!cameraWorking){
     		SurfaceView cameraPreview = (SurfaceView) findViewById(R.id.camera_preview);
     		cameraPreview.setBackgroundResource(0);
